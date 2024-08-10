@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from .models import User, Pet, Adoption
+
+from .models import Adoption, Pet, User
+
 
 class UserSerializer(serializers.ModelSerializer):
   class Meta:
@@ -9,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
 class PetSerializer(serializers.ModelSerializer):
   class Meta:
     model = Pet
-    fields = ['id', 'name', 'age', 'breed', 'health_records', 'adoption_status', 'additional_info', 'create_date', 'update_date']
+    fields = ['id', 'name', 'age', 'breed', 'health_records', 'adoption_status', 'additional_info', 'image', 'create_date', 'update_date']
 
 class AdoptionSerializer(serializers.ModelSerializer):
   class Meta:

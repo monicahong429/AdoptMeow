@@ -7,7 +7,7 @@
   <title>AdoptMeow</title>
 
   {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
@@ -17,6 +17,47 @@
     <a href="{% url 'register_view' %}" class="button">Register</a>
   </nav>
   <h1>Welcome to AdoptMeow!</h1>
+  <h2>See the animals we have available to adopt!</h2>
+  <h3>You must be logged in in order to adopt a new best friend!</h3>
+  <ul class="pet-list" id="pet-list"></ul>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      fetch('/api/pets/')
+        .then(response => response.json())
+        .then(data => {
+          const petList = document.getElementById('pet-list');
+          data.forEach(pet => {
+            const petItem = document.createElement('li');
+            petItem.className = 'pet-item';
+
+            const petDetails = document.createElement('div');
+            petDetails.className = 'pet-details';
+
+            if (pet.image) {
+              const petImage = document.createElement('img');
+              petImage.className = 'pet-image';
+              const imageUrl = `${pet.image}`;
+              petImage.src = imageUrl;
+              petDetails.appendChild(petImage);
+            }
+
+            const petInfo = document.createElement('div');
+            petInfo.innerHTML = `
+                              <strong>${pet.name}</strong> - ${pet.breed} - ${pet.age} years old<br>
+                              <em>Adoption Status:</em> ${pet.adoption_status ? 'Not Available' : 'Available'}<br>
+                              <em>Health Records:</em> ${pet.health_records}<br>
+                              <em>Additional Info:</em> ${pet.additional_info || 'N/A'}
+                          `;
+            petDetails.appendChild(petInfo);
+
+            petItem.appendChild(petDetails);
+            petList.appendChild(petItem);
+          });
+        })
+        .catch(error => console.error('Error fetching pets:', error));
+    });
+  </script>
 </body>
 
 </html>
