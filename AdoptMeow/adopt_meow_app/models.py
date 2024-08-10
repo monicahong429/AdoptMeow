@@ -35,6 +35,7 @@ class Pet(models.Model):
   health_records = models.TextField()
   adoption_status = models.BooleanField(default=False)
   additional_info = models.TextField(blank=True, null=True)
+  image = models.ImageField(upload_to='pets/', blank=True, null=True)
   create_date = models.DateTimeField(auto_now_add=True)
   update_date = models.DateTimeField(auto_now=True)
   
