@@ -4,19 +4,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AdoptMeow</title>
+  <title>Adopt Dashboard</title>
 
   {% load static %}
   <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 </head>
 
 <body>
-  <nav>
-    <a href="{% url 'index' %}" class="button">Home</a>
-    <a href="{% url 'login_view' %}" class="button">Login</a>
-    <a href="{% url 'register_view' %}" class="button">Register</a>
-  </nav>
-  <h1>Welcome to AdoptMeow!</h1>
+  <h1>Dashboard!</h1>
+  <h2>Welcome, {{ user.username }}!</h2>
+  <p>You are logged in.</p>
+  <form method="post" action="{% url 'logout_view' %}">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+  </form>
 </body>
 
 </html>
