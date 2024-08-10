@@ -39,13 +39,13 @@ class Pet(models.Model):
   create_date = models.DateTimeField(auto_now_add=True)
   update_date = models.DateTimeField(auto_now=True)
   
-  def save(self, *args, **kwargs):
-    # Check if there are any approved adoptions for this pet
-    if Adoption.objects.filter(pet=self, status='approved').exists():
-      self.adoption_status = True
-    else:
-      self.adoption_status = False
-    super().save(*args, **kwargs)
+  # def save(self, *args, **kwargs):
+  #   # Check if there are any approved adoptions for this pet
+  #   if Adoption.objects.filter(pet=self, status='approved').exists():
+  #     self.adoption_status = True
+  #   else:
+  #     self.adoption_status = False
+  #   super().save(*args, **kwargs)
   
   def __str__(self):
     return self.name
@@ -62,10 +62,10 @@ class Adoption(models.Model):
   create_date = models.DateTimeField(auto_now_add=True)
   update_date = models.DateTimeField(auto_now=True)
   
-  def save(self, *args, **kwargs):
-    super().save(*args, **kwargs)
-    # Update the adoption status of the pet
-    self.pet.save()
+  # def save(self, *args, **kwargs):
+  #   super().save(*args, **kwargs)
+  #   # Update the adoption status of the pet
+  #   self.pet.save()
   
   def __str__(self):
     return f"{self.user.username} {self.pet.name}"
