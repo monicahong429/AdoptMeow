@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'adopt_meow_app',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
