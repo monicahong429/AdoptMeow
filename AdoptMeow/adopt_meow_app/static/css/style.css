@@ -16,6 +16,13 @@ nav, h1, h2, h3 {
 p {
   margin: 10px;
 }
+#favorites-list .pet-item{
+  background-color: lightseagreen !important;
+  color: white !important;
+}
+#favorites-list .pet-image-container {
+  border: 5px solid green !important;
+}
 .pet-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -47,7 +54,6 @@ p {
   border-radius: 10px;
   margin: 10px;
   border: 5px solid gold;
-
 }
 .pet-image {
   width: 100%;

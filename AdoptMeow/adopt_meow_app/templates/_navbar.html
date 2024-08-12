@@ -9,5 +9,8 @@
     {% else %}
     <a href="{% url 'login_view' %}" class="navbar-link">Login</a>
     {% endif %}
+    {% if user.is_superuser %}
+    <a href="/admin" class="navbar-link">Admin</a>
+    {% endif %}
   </div>
 </nav>
