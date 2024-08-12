@@ -24,17 +24,18 @@
       <p>Status: {{ pet.adoption_status|yesno:"Not Available to adopt,Available to adopt!" }}</p>
       <p>{{ pet.additional_info }}</p>
     </div>
-    {% if user.is_authenticated %}
-    <form action="{% url 'toggle_favorite' pet.id %}" method="post">
-      {% csrf_token %}
-      {% if pet in user.favorites.all %}
-      <button type="submit">Remove from Favorites</button>
-      {% else %}
-      <button type="submit">Add to Favorites</button>
-      {% endif %}
-    </form>
-    {% endif %}
   </div>
+  <!-- {% if user.is_authenticated %}
+  <form action="{% url 'toggle_favorite' pet.id %}" method="post">
+    {% csrf_token %}
+    {% if pet in favorites %}
+    <button type="submit">Remove from Favorites</button>
+    {% else %}
+    <button type="submit">Add to Favorites</button>
+    {% endif %}
+  </form>
+  {% endif %} -->
+
 </body>
 
 </html>

@@ -27,7 +27,9 @@ class User(AbstractUser):
     help_text='Specific permissions for this user.',
     verbose_name='user permissions'
   )
-  favorites = models.ManyToManyField('Pet', related_name='favorited_by', blank=True)
+  
+  def __str__(self):
+    return self.username
 
 class Pet(models.Model):
   name = models.CharField(max_length=100)
@@ -57,3 +59,15 @@ class Adoption(models.Model):
   
   def __str__(self):
     return f"{self.user.username} {self.pet.name}"
+  
+class Favorite(models.Model):
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
+  pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
+  create_date = models.DateTimeField(auto_now_add=True)
+  update_date = models.DateTimeField(auto_now=True)
+  
+  class Meta:
+    unique_together = ('user', 'pet')
+  
+  def __str__(self):
+    return f"{self.user.username} - {self.pet.name}"

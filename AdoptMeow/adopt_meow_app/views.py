@@ -1,14 +1,16 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, get_user_model, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView
 from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework import generics, permissions
 
 from .forms import LoginForm, RegisterForm
-from .models import Adoption, Pet, User
+from .models import Adoption, Favorite, Pet, User
 from .serializers import AdoptionSerializer, PetSerializer, UserSerializer
 
 # Create your views here.
+
+User = get_user_model()
 
 def index(request):
   return render(request, 'index.html')
@@ -49,15 +51,18 @@ def dashboard(request):
 @login_required
 def pet_detail(request, pet_id):
   pet = get_object_or_404(Pet, id=pet_id)
+  user = User.objects.get(id=request.user.id)
+  # favorites = Favorite.objects.filter(user=user)
+  # return render(request, 'pet_detail.html', {'pet': pet, 'favorites': favorites})
   return render(request, 'pet_detail.html', {'pet': pet})
 
 @login_required
 def toggle_favorite(request, pet_id):
   pet = get_object_or_404(Pet, id=pet_id)
-  if pet in request.user.favorites.all():
-    request.user.favorites.remove(pet)
-  else:
-    request.user.favorites.add(pet)
+  user = User.objects.get(id=request.user.id)
+  favorite, created = Favorite.objects.get_or_create(user=user, pet=pet)
+  if not created:
+    favorite.delete()
   return redirect('pet_detail', pet_id=pet_id)
 
 class RegisterUserView(generics.CreateAPIView):

@@ -2,7 +2,10 @@
   <div class="container">
     <a href="{% url 'index' %}" class="navbar-brand">Home</a>
     {% if user.is_authenticated %}
-    <a href="{% url 'logout_view' %}" class="navbar-link">Logout</a>
+    <form id="logout-form" action="{% url 'logout_view' %}" method="post" style="display: none;">
+      {% csrf_token %}
+    </form>
+    <a href="#" class="navbar-link" onclick="document.getElementById('logout-form').submit();">Logout</a>
     {% else %}
     <a href="{% url 'login_view' %}" class="navbar-link">Login</a>
     {% endif %}
