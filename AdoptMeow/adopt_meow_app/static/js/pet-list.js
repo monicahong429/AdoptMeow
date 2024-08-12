@@ -17,6 +17,10 @@ function createPetItem(pet) {
   const petItem = document.createElement("li");
   petItem.className = "pet-item";
 
+  const petLink = document.createElement("a");
+  petLink.href = `/pets/${pet.id}/`;
+  petLink.className = "pet-link";
+
   const petDetails = document.createElement("div");
   petDetails.className = "pet-details";
 
@@ -28,7 +32,8 @@ function createPetItem(pet) {
   const petInfo = createPetInfo(pet);
   petDetails.appendChild(petInfo);
 
-  petItem.appendChild(petDetails);
+  petLink.appendChild(petDetails);
+  petItem.appendChild(petLink);
   return petItem;
 }
 

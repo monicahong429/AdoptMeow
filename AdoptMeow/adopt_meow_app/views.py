@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework import generics, permissions
 
 from .forms import LoginForm, RegisterForm
@@ -41,8 +42,23 @@ def register_view(request):
     form = RegisterForm()
   return render(request, 'register.html', {'form': form})
 
+@login_required
 def dashboard(request):
   return render(request, 'dashboard.html')
+
+@login_required
+def pet_detail(request, pet_id):
+  pet = get_object_or_404(Pet, id=pet_id)
+  return render(request, 'pet_detail.html', {'pet': pet})
+
+@login_required
+def toggle_favorite(request, pet_id):
+  pet = get_object_or_404(Pet, id=pet_id)
+  if pet in request.user.favorites.all():
+    request.user.favorites.remove(pet)
+  else:
+    request.user.favorites.add(pet)
+  return redirect('pet_detail', pet_id=pet_id)
 
 class RegisterUserView(generics.CreateAPIView):
   queryset = User.objects.all()

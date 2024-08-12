@@ -27,6 +27,7 @@ class User(AbstractUser):
     help_text='Specific permissions for this user.',
     verbose_name='user permissions'
   )
+  favorites = models.ManyToManyField('Pet', related_name='favorited_by', blank=True)
 
 class Pet(models.Model):
   name = models.CharField(max_length=100)
