@@ -27,6 +27,9 @@ class User(AbstractUser):
     help_text='Specific permissions for this user.',
     verbose_name='user permissions'
   )
+  
+  def __str__(self):
+    return self.username
 
 class Pet(models.Model):
   name = models.CharField(max_length=100)
@@ -38,14 +41,6 @@ class Pet(models.Model):
   image = models.ImageField(upload_to='pets/', blank=True, null=True)
   create_date = models.DateTimeField(auto_now_add=True)
   update_date = models.DateTimeField(auto_now=True)
-  
-  # def save(self, *args, **kwargs):
-  #   # Check if there are any approved adoptions for this pet
-  #   if Adoption.objects.filter(pet=self, status='approved').exists():
-  #     self.adoption_status = True
-  #   else:
-  #     self.adoption_status = False
-  #   super().save(*args, **kwargs)
   
   def __str__(self):
     return self.name
@@ -62,10 +57,17 @@ class Adoption(models.Model):
   create_date = models.DateTimeField(auto_now_add=True)
   update_date = models.DateTimeField(auto_now=True)
   
-  # def save(self, *args, **kwargs):
-  #   super().save(*args, **kwargs)
-  #   # Update the adoption status of the pet
-  #   self.pet.save()
-  
   def __str__(self):
     return f"{self.user.username} {self.pet.name}"
+  
+class Favorite(models.Model):
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
+  pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
+  create_date = models.DateTimeField(auto_now_add=True)
+  update_date = models.DateTimeField(auto_now=True)
+  
+  class Meta:
+    unique_together = ('user', 'pet')
+  
+  def __str__(self):
+    return f"{self.user.username} - {self.pet.name}"

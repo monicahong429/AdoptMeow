@@ -4,20 +4,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Adopt Dashboard</title>
 
   {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+  <title>Adopt Dashboard</title>
 </head>
 
 <body>
+  {% include '_navbar.html' %}
   <h1>Dashboard!</h1>
   <h2>Welcome, {{ user.username }}!</h2>
   <p>You are logged in.</p>
-  <form method="post" action="{% url 'logout_view' %}">
-    {% csrf_token %}
-    <button type="submit">Logout</button>
-  </form>
+
+  <ul class="pet-list" id="pet-list"></ul>
+
+  {% load static %}
+  <script src="{% static 'js/pet-list.js' %}"></script>
 </body>
 
 </html>
