@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+  <title>Adopt Dashboard</title>
+</head>
+
+<body>
+  {% include '_navbar.html' %}
+  <h1>Dashboard!</h1>
+  <h2>Welcome, {{ user.username }}!</h2>
+  <p>You are logged in.</p>
+  <div>
+    <h3>My Favorites</h3>
+    <ul class="pet-list" id="favorites-list" data-user-id="{{ request.user.id }}"></ul>
+  </div>
+  <div>
+    <h3>View Pets</h3>
+    <ul class="pet-list" id="pet-list"></ul>
+  </div>
+
+  {% load static %}
+  <script src="{% static 'js/pet-list.js' %}"></script>
+  <script src="{% static 'js/favorites-list.js' %}"></script>
+</body>
+
+</html>

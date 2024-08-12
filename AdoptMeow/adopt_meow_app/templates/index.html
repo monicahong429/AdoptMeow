@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AdoptMeow</title>
+
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+  <nav>
+    <a href="{% url 'index' %}" class="button">Home</a>
+    <a href="{% url 'login_view' %}" class="button">Login</a>
+    <a href="{% url 'register_view' %}" class="button">Register</a>
+  </nav>
+  <h1>Welcome to AdoptMeow!</h1>
+  <h2>See the animals we have available to adopt!</h2>
+  <h3>You must be logged in in order to adopt a new best friend!</h3>
+
+  <ul class="pet-list" id="pet-list"></ul>
+
+  {% load static %}
+  <script src="{% static 'js/pet-list.js' %}"></script>
+</body>
+
+</html>
