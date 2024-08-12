@@ -5,13 +5,16 @@ from rest_framework import generics, permissions
 
 from .forms import LoginForm, RegisterForm
 from .models import Adoption, Favorite, Pet
-from .serializers import AdoptionSerializer, PetSerializer, UserSerializer
+from .serializers import (AdoptionSerializer, FavoriteSerializer,
+                          PetSerializer, UserSerializer)
 
 # Create your views here.
 
 User = get_user_model()
 
 def index(request):
+  if request.user.is_authenticated:
+    return redirect('dashboard')
   return render(request, 'index.html')
 
 def login_view(request):
@@ -88,7 +91,8 @@ class PetListView(generics.ListCreateAPIView):
 class PetDetailView(generics.RetrieveUpdateDestroyAPIView):
   queryset = Pet.objects.all()
   serializer_class = PetSerializer
-  permission_classes = [permissions.IsAdminUser]
+  permission_classes = [permissions.IsAuthenticated]
+  lookup_field = 'id'
   
 class AdoptionCreateView(generics.CreateAPIView):
   queryset = Adoption.objects.all()
@@ -98,3 +102,11 @@ class AdoptionListView(generics.ListAPIView):
   queryset = Adoption.objects.all()
   serializer_class = AdoptionSerializer
   permission_classes = [permissions.IsAdminUser]
+  
+class UserFavoritesList(generics.ListAPIView):
+  serializer_class = FavoriteSerializer
+  permission_classes = [permissions.IsAuthenticated]
+  
+  def get_queryset(self):
+    user_id = self.kwargs['user_id']
+    return Favorite.objects.filter(user_id=user_id)

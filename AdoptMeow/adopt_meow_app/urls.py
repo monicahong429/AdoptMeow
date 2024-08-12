@@ -4,7 +4,7 @@ from django.urls import path
 from . import views
 from .views import (AdoptionCreateView, AdoptionListView, LoginUserView,
                     PetDetailView, PetListView, RegisterUserView,
-                    UserDetailView)
+                    UserDetailView, UserFavoritesList)
 
 urlpatterns = [
   # Web views
@@ -23,4 +23,5 @@ urlpatterns = [
   path('api/pets/<int:id>/', PetDetailView.as_view(), name='pet-detail-api'),
   path('api/adoptions/', AdoptionCreateView.as_view(), name='adoption-create-api'),
   path('api/adoptions/', AdoptionListView.as_view(), name='adoption-list-api'),
+  path('api/user/<int:user_id>/favorites/', UserFavoritesList.as_view(), name='user-favorites')
 ]
