@@ -1,6 +1,6 @@
 <nav class="navbar">
   <div class="container">
-    <a href="{% url 'index' %}" class="navbar-brand">Home</a>
+    <a href="{% url 'dashboard' %}" class="navbar-brand">Home</a>
     {% if user.is_authenticated %}
     <form id="logout-form" action="{% url 'logout_view' %}" method="post" style="display: none;">
       {% csrf_token %}
